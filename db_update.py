@@ -3,31 +3,41 @@ from pyexcel_ods3 import get_data
 import os
 from peewee import *
 db.connect
-#db.create_tables([cdek_city_region, cdek_city_city])
 collect = {}
 for file in os.listdir(): 
 	if file.endswith('.ods'):
 		data = get_data(file)
 		print(f'Downloading {file}')
-		for i in data:
-		#for i in data['Part_1'][1::]:
-		#	print(i)
+		for i in data['Part 1'][1::]:
 			try:
-				print('pfuheprf')
-				country = city_api_country.create(name = data[i][11], code = data[i][10] )
-				print('2')
-				region = city_api_region.create(name = data[i][3], country = country)
-				city_api_city.create(
-					ID = data[i][0],
-					full_name = data[i][1],
-					city_name = data[i][2],
-					region = region,
-					center = data[i][4],
-					nal_sum_limit = data[i][5],
-					eng_name = data[i][6],
-					post_code_list = data[i][7],
-					country = country
-						)
+				regi = None
+				if i[3]:
+					try:
+						regi = city_api_region.get(name = i[3])
+					except DoesNotExist:
+						regi = city_api_region.create(name = i[3])
+					city = i[2]
+					if city.endswith('обл.'):
+						city = city.split(',')[0]
+					city_api_city.create(
+						ID = i[0],
+						city_name = city,
+						region = regi.id,
+						country = i[11]
+							)
+				else:
+					city = i[2]
+					try:
+						if city.endswith('обл.'):
+							city = city.split(',')[0]
+					except AttributeError:
+						city = i[2]
+					city_api_city.create(
+						ID = i[0],
+						city_name = city,
+						region = None,
+						country = i[11]
+							)
 			except IndexError:
 				print(f'{file} now is done!')
 				break
