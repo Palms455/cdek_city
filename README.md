@@ -1,7 +1,9 @@
 # cdek_city
 1. Скрипт для внесения в PgSQL данных из файлов .ods
+
 db_settings.py- настройки БД
 db_update.py - инициализация
+
 Зависимости: 
 peewee==3.13.1
 psycopg2==2.8.4
