@@ -1,7 +1,5 @@
-peewee==3.13.1
+pyexcel==0.5.15
 psycopg2==2.8.4
 psycopg2-binary==2.8.4
 django==3.0.4
 djangorestframework==3.11.0
-pyexcel-ods3==0.5.3
-
