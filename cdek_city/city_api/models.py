@@ -15,15 +15,15 @@ class Region(models.Model):
 
 class City(models.Model):
 	cdek_code = models.PositiveIntegerField(verbose_name='CDEK ID', unique=True)
-	city_name = models.CharField(max_length=150, verbose_name='Название')
+	name = models.CharField(max_length=150, verbose_name='Название')
 	region = models.ForeignKey(Region, verbose_name='Регион', on_delete=models.CASCADE, null=True, related_name='cities')
 
 	class Meta:
 		verbose_name='Город'
 		verbose_name_plural='Города'
-		unique_together = ('region', 'city_name',)
+		unique_together = ('region', 'name',)
 
 
 	def __str__(self):
-		return f'{self.city_name} {self.region}'
+		return f'{self.name} {self.region}'
 

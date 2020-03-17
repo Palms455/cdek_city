@@ -20,14 +20,14 @@ class CityView(APIView, PaginationHandlerMixin):
 		country = request.GET.get('country', '')
 		region = request.GET.get('region', '')
 		name = request.GET.get('name', '')
-		cities = City.objects.filter(city_name__icontains=name,
+		cities = City.objects.filter(name__icontains=name,
 									 region__country__icontains=country,
-									 region__name__icontains=region).order_by('city_name', 'pk')
+									 region__name__icontains=region).order_by('name', 'pk')
 		
-		page = self.paginate_queryset(cities[0:10])
+		page = self.paginate_queryset(cities)
 		if page is not None:
 			serializer = self.get_paginated_response(self.serializer_class(page,many=True).data)
 		else:
-			serializer = self.serializer_class(cities[0:10], many=True)
+			serializer = self.serializer_class(cities, many=True)
 		return Response(serializer.data)
 		
