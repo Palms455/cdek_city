@@ -15,6 +15,4 @@ class Command(BaseCommand):
 				region, created = Region.objects.get_or_create(name = item['region_code'], country='Россия')
 				if created:
 					print(f'Created Region {region}')
-				if not City.objects.filter(name=item['city'], region=region).exists():
-					if not City.objects.filter(cdek_code=item['code']).exists():
-						city = City.objects.create(name=item['city'], region=region, cdek_code=item['code'])
+				city = City.objects.create(name=item['city'], region=region, cdek_code=item['code'])
