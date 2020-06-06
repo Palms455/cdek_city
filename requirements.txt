@@ -1,5 +1,5 @@
 pyexcel==0.5.15
 psycopg2==2.8.4
 psycopg2-binary==2.8.4
-django==3.0.4
+django==3.0.7
 djangorestframework==3.11.0
